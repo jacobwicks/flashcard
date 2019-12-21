@@ -1,0 +1,90 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Matches Snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="ui menu"
+    data-testid="menu"
+  >
+    <div
+      class="header item"
+    >
+      Flashcard App
+    </div>
+    <a
+      class="active item"
+    >
+      Answer Flashcards
+    </a>
+    <a
+      class="item"
+    >
+      Edit Flashcards
+    </a>
+  </div>
+  <div
+    class="ui vertical ui left thin visible sidebar menu"
+    data-testid="sidebar"
+    style="top: 50px;"
+  >
+    <a
+      class="item"
+    >
+      Subjects
+    </a>
+    <a
+      class="active item"
+    >
+      <i
+        aria-hidden="true"
+        class="list icon"
+      />
+      Linked List
+    </a>
+    <a
+      class="item"
+    >
+      <i
+        aria-hidden="true"
+        class="list icon"
+      />
+      Stack
+    </a>
+  </div>
+  <div
+    class="ui container"
+    data-testid="container"
+    style="position: absolute; left: 200px;"
+  >
+    <div
+      class="ui header"
+      data-testid="question"
+    >
+      <i
+        aria-hidden="true"
+        class="question circle icon"
+        data-testid="icon"
+      />
+      What is a linked list?
+    </div>
+    <button
+      class="ui button"
+    >
+      Skip
+    </button>
+    <form
+      class="ui form"
+    >
+      <textarea
+        data-testid="textarea"
+        rows="3"
+      />
+    </form>
+    <button
+      class="ui button"
+    >
+      Submit
+    </button>
+  </div>
+</DocumentFragment>
+`;

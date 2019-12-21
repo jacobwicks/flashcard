@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Matches Snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="ui container"
+    data-testid="container"
+    style="position: absolute; left: 200px;"
+  >
+    <div
+      class="ui header"
+      data-testid="question"
+    >
+      <i
+        aria-hidden="true"
+        class="question circle icon"
+        data-testid="icon"
+      />
+      What is a linked list?
+    </div>
+    <button
+      class="ui button"
+    >
+      Skip
+    </button>
+    <form
+      class="ui form"
+    >
+      <textarea
+        data-testid="textarea"
+        rows="3"
+      />
+    </form>
+    <button
+      class="ui button"
+    >
+      Submit
+    </button>
+  </div>
+</DocumentFragment>
+`;
