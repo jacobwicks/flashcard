@@ -1,26 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
+import logo from './logo.svg';
 import './App.css';
-import Answering from './scenes/Answering';
-import Writing from './scenes/Writing';
-import { CardProvider } from './services/CardContext';
-import { StatsProvider } from './services/StatsContext';
-import { SceneTypes } from './types';
-import NavBar from './components/NavBar';
-import Selector from './components/Selector';
 
 const App: React.FC = () => {
-  
-  const [showScene, setShowScene] = useState(SceneTypes.answering);
-  
-    return (
-      <CardProvider>
-        <StatsProvider>
-          <NavBar showScene={showScene} setShowScene={setShowScene} />
-          <Selector/>
-          {showScene === SceneTypes.answering && <Answering />}
-          {showScene === SceneTypes.writing && <Writing/>}
-        </StatsProvider>
-      </CardProvider>
-    )};
+  return (
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.tsx</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header>
+    </div>
+  );
+}
 
 export default App;
