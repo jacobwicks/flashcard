@@ -103,7 +103,7 @@ export const reducer = (state: CardState, action: any) => {
                 subject
             } as Card;
     
-            const newCards = [...cards.filter(v => !!v.question)];
+            const newCards = cards.filter(v => !!v.question);
     
             if (index > -1) {
                 newCards[index] = card;
