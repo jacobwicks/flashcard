@@ -11,7 +11,7 @@ const Answer = ({
     const { answer } = cards[current];
 
     const content = answer
-        .split(/(\r\n|\r|\n)/g)
+        .split(/\n/g)
         .map((string, index) => <div key={index}>{string}</div>);
         
 return (
