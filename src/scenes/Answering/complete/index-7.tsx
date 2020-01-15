@@ -14,7 +14,7 @@ import {
 import { CardContext } from '../../services/CardContext';
 
 //The types of action that CardContext can handle
-import { CardActionTypes } from '../../../types';
+import { CardActionTypes } from '../../types';
 
 const Answering = () => {
     //get cards, current index, and dispatch from CardContext

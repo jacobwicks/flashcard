@@ -1,22 +1,11 @@
 import React, { useContext} from 'react';
 import { render, cleanup, getByTestId, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
+import { blankStats, initialState, reducer, StatsContext } from './index';
 import { Stats, StatsActionType, StatsState } from '../../types';
+import { StatsProvider } from './index';
+import * as localStorage from '../Save';
 import { Button } from 'semantic-ui-react';
-
-jest.mock('../Save', () => ({
-    saveStats: jest.fn(),
-    loadStats: () => ({})
-}));
-
-const { 
-    blankStats, 
-    initialState, 
-    reducer, 
-    StatsContext,
-    StatsProvider 
-} = require('./index');
-
 
 afterEach(cleanup);
 
@@ -146,7 +135,7 @@ describe('StatsProvider', () => {
     //A helper component to get Stats out of StatsContext
     //and display them so we can test
     const StatsConsumer = () => {
-        const stats: StatsState = useContext(StatsContext);
+        const stats = useContext(StatsContext);
        
         //stats is the whole StatsState
         //one of its keys is the dispatch key, 
@@ -183,6 +172,7 @@ describe('StatsProvider', () => {
         }
     };
 
+
     //StatsContext returns a stats object
     describe('StatsContext provides stats object', () => {
         const renderConsumer = () => render(
@@ -210,6 +200,23 @@ describe('StatsProvider', () => {
 
     })
 })
+
+
+
+// const DeletesCard = () => {
+//     const { dispatch } = useContext(CardContext);
+//     return <Button content='delete' onClick={() => dispatch({
+//         type: CardActionTypes.delete,
+//         question
+//     })}/>}
+
+// const { getByText } = render(
+//     <CardProvider>
+//         <DeletesCard/>
+//     </CardProvider>);
+
+// const deleteCard = getByText(/delete/i);
+// fireEvent.click(deleteCard);
 
 describe('saving to localStorage and loading from localStorage ', () => {
     describe('save', () => {        
@@ -250,8 +257,7 @@ describe('saving to localStorage and loading from localStorage ', () => {
             actionType, 
             result
             ) => {
-            //test starts here           
-            const localStorage = require('../Save'); 
+            //test starts here            
             const saveStats = jest.spyOn(localStorage, 'saveStats');
             saveStats.mockClear();
 
@@ -273,32 +279,6 @@ describe('saving to localStorage and loading from localStorage ', () => {
         });
     });
 
-    describe('load', () => {
-        //stats is empty object when it does not get stats from localstorage
-        it('gets default initialState when no stats in localstorage', () => {        
-            expect(initialState).toHaveProperty('dispatch');
-            expect(Object.keys(initialState).length).toEqual(1);
-        });
-
-        //loading stats retrieves saved stats
-        it('loads stats from localStorage when there are stats in localStorage', () => {
-            const localStorage = require('../Save'); 
-            const loadStats = jest.spyOn(localStorage, 'loadStats');
-
-            loadStats.mockImplementation(() => ({
-                'Example Question': {
-                    right: 1,
-                    wrong: 2,
-                    skip: 3
-                }
-            }));
-
-            const { getInitialState } = require('./index');
-            const initialState = getInitialState();
-
-            expect(initialState).toHaveProperty('dispatch');
-            expect(initialState).toHaveProperty('Example Question');
-            expect(Object.keys(initialState).length).toEqual(2);
-        })
-    })
+    //stats is empty object when it does not get stats from localstorage
+    //initialState contains saved stats when saved stats are returned from localStorage
 });

@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useReducer } from 'react';
 import { Stats, StatsAction, StatsState } from '../../types';
-import { saveStats } from '../Save';
+import { loadStats, saveStats } from '../Save';
 
 //a Stats object
 //use as the basis for tracking stats for a new question
@@ -93,10 +93,13 @@ export const reducer = (state: StatsState, action: StatsAction) => {
     }
 };
 
-//the object that we use to make the first Context
-export const initialState = {
+export const getInitialState = () => ({
+    ...loadStats(),
     dispatch: (action: StatsAction) => undefined
-} as StatsState;
+} as StatsState);
+
+//the object that we use to make the first Context
+export const initialState = getInitialState();
 
 const StatsContext = createContext(initialState);
 

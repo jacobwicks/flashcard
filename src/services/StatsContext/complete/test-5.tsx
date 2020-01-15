@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import { blankStats, initialState, reducer } from './index';
+import { blankStats, initialState, reducer, StatsProvider } from './index';
 import { Stats, StatsActionType, StatsState, StatsAction } from '../../types';
 
 afterEach(cleanup);

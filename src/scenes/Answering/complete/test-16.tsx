@@ -172,8 +172,14 @@ it('clicks the submit button and shows the answer', () => {
         const withoutLineBreaks = secondAnswer.replace(/\s{2,}/g, " ");
 
         //a function that compares a string to the second answer
-        const compareToSecondAnswer = (content: string) => content === withoutLineBreaks;
-
+        const compareToSecondAnswer = (
+            content: string, 
+            { textContent } : HTMLElement
+        ) => !!textContent && 
+            textContent
+            .replace(/\s{2,}/g, " ")
+            .slice(6, textContent.length) === withoutLineBreaks;
+            
         //look for the first answer
         const gone = queryByText(compareToInitialAnswer);
         //first answer shouldn't show up

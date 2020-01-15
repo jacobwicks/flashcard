@@ -80,18 +80,6 @@ describe('theres a popup', () => {
             expect(seen).toBeInTheDocument();        
         });
 
-        it('calculates total times seen', () => {
-            const { getByTestId, getByText } = renderStats();
-            const icon = getByTestId('icon');
-            fireEvent.click(icon);
-    
-            const seen = getByText(/you have seen this question/i);
-            expect(seen).toBeInTheDocument();
-            expect(seen).toHaveTextContent('You have seen this question 10 times.')
-        });
-
     })
 
 });
-
-
