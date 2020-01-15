@@ -7,6 +7,8 @@ import { StatsState } from '../../../../types';
 import { CardProvider } from '../../../../services/CardContext';
 import { initialState as cardState } from '../../../../services/CardContext';
 
+afterEach(cleanup);
+
 //has an icon
 it('has an icon', () => {
     // We'll get the icon by using a testId.
