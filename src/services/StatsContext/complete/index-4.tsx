@@ -1,6 +1,5 @@
-import React, { createContext, useEffect, useReducer } from 'react';
+import React, { createContext, useReducer } from 'react';
 import { Stats, StatsAction, StatsState } from '../../types';
-import { saveStats } from '../Save';
 
 //a Stats object
 //use as the basis for tracking stats for a new question
@@ -111,13 +110,7 @@ type StatsProviderProps = {
 
 const StatsProvider = ({ children, testState }: StatsProviderProps) => {
     const [state, dispatch] = useReducer(reducer, testState ? testState : initialState);
-    
-    useEffect(() => {
-        saveStats(state);
-    }, [state])
-    
     const value = {...state, dispatch} as StatsState;
-    
     return (
         <StatsContext.Provider value={value}>
             {children}
