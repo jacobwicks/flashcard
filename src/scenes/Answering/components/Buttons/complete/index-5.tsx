@@ -22,7 +22,7 @@ const Buttons = ({
                 onClick={() => dispatch({ type: CardActionTypes.next })}
             />    
         </Button.Group>
-    :   <Button content='Submit' onClick={() => submit()}/>
+    :   <Button content='Submit'/>
 }; 
 
 export default Buttons;
