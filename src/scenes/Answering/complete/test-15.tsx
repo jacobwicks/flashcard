@@ -1,6 +1,6 @@
 //React lets us create and display components to the user
 //We need to import it so that we can look at the components to test them
-import React, { useContext } from 'react';
+import React from 'react';
 
 //testing library gives us methods to test components
 //we use render to look at React components
@@ -15,10 +15,9 @@ import '@testing-library/jest-dom/extend-expect';
 //we have to import it so that we can look at it to test it
 import Answering from './index';
 
-import { CardState, StatsState } from '../../types';
+import { CardState } from '../../types';
 
 import { CardProvider, initialState } from '../../services/CardContext';
-import { StatsContext, StatsProvider } from '../../services/StatsContext';
 
 afterEach(cleanup);
 
@@ -115,34 +114,41 @@ describe('submit button controls display of the answer', () => {
     //remove lineBreaks from initialAnswer for comparison to textContent of elements 
     const withoutLineBreaks = initialAnswer.replace(/\s{2,}/g, " ");
 
-    const compareToInitialAnswer = (content: string) => content === withoutLineBreaks;
+    const compareToInitialAnswer = (
+        content: string, 
+        { textContent } : HTMLElement
+    ) => !!textContent && 
+        textContent
+        .replace(/\s{2,}/g, " ")
+        .slice(6, textContent.length) === withoutLineBreaks;
 
-it('the answer does not show up before the submit button is clicked', () => {
-    const { queryByText } = renderAnswering();
-    const answer = queryByText(compareToInitialAnswer);
-    expect(answer).toBeNull();
-})
-    //clicking the submit button makes the answer show up
-it('clicks the submit button and shows the answer', () => {    
-    const { getByText } = renderAnswering();
-    
-    //find the submit button
-    const submit = getByText(/submit/i);
-    //simulating a click on the submit button
-    fireEvent.click(submit);
-  
-    //use a custom function to find the answer
-    //because the Answer component sticks a header with text in the answer div
-    //the function returns true if content is equal to the initial answer withoutLineBreaks 
-    const answer = getByText(compareToInitialAnswer);
-    
-    //assertion
-    expect(answer).toBeInTheDocument();
-  });
+    it('the answer does not show up before the submit button is clicked', () => {
+        const { queryByText } = renderAnswering();
+        const answer = queryByText(compareToInitialAnswer);
+        expect(answer).toBeNull();
+    })
 
-      //answer goes away
-      it('answer disappears when card changes', async () => {
-        const { debug, getByText, queryByText } = renderAnswering();
+        //clicking the submit button makes the answer show up
+    it('clicks the submit button and shows the answer', () => {    
+        const { getByText } = renderAnswering();
+        
+        //find the submit button
+        const submit = getByText(/submit/i);
+        //simulating a click on the submit button
+        fireEvent.click(submit);
+    
+        //use a custom function to find the answer
+        //because the Answer component sticks a header with text in the answer div
+        //the function returns true if content is equal to the initial answer withoutLineBreaks 
+        const answer = getByText(compareToInitialAnswer);
+        
+        //assertion
+        expect(answer).toBeInTheDocument();
+    });
+
+    //answer goes away
+    it('answer disappears when card changes', async () => {
+        const { getByText, queryByText } = renderAnswering();
         
         //find the submit button
         const submit = getByText(/submit/i);
@@ -177,6 +183,7 @@ it('clicks the submit button and shows the answer', () => {
         await waitForElementToBeRemoved(() => queryByText(compareToSecondAnswer));        
     });
 })
+
 
 describe('clicking the Submit Button makes the Right and Wrong Buttons show up', () => {
     //the Right button does not show up before Submit is clicked
@@ -219,69 +226,24 @@ describe('clicking the Submit Button makes the Right and Wrong Buttons show up',
     });
 });
 
-// look for the icon from the stats component.
-it('has the stats icon', () => {
-    const { getByTestId } = renderAnswering();
-    const stats = getByTestId('icon');
-    expect(stats).toBeInTheDocument();
+it('clears the answer when card changes', () => {
+    const { getByText, getByTestId } = renderAnswering();
+    //get reference to textarea
+    const textarea = getByTestId('textarea');
+    
+    const placeholder = 'placeholder text'
+    //change content of textarea
+    fireEvent.change(textarea, { target: { value: placeholder } });
+    //make sure textarea textcontent matches placeholder before we clear it
+    expect(textarea).toHaveTextContent(placeholder);
+    
+    //clicking skip changes the card
+    const skip = getByText(/skip/i);
+    fireEvent.click(skip);
+
+    //textarea should be clear
+    expect(textarea).toHaveTextContent('');
 });
-
-//when the user clicks the skip button, the skip is recorded in the stats
-it('clicking skip records stats', () => {
-     //create a CardState with current set to 0
-     const cardState = {
-        ...initialState,
-        current: 0
-    };
-
-    //a blank stats object
-    const blankStats = {
-        right: 0,
-        wrong: 0,
-        skip: 0
-    };
-
-    //get the question from cards index 0
-    const { question } = cardState.cards[0];
-
-    //create statsState with stats for the question
-    const statsState: StatsState = {
-        [question]: blankStats
-    };
-
-    //helper component displays the value of skip for the question
-    const SkipDisplay = () => {
-        const stats = useContext(StatsContext)
-        const { skip } = stats[question];
-        return <div data-testid='skipDisplay'>{skip}</div> 
-    };
-    
-    //render Answering and SkipDisplay inside the providers
-    //pass the providers the cardState and StatsState values that we defined
-    const { getByTestId, getByText } = render(
-        <CardProvider testState={cardState}>
-            <StatsProvider testState={statsState}>
-            <Answering />
-            <SkipDisplay/>
-        </StatsProvider>
-      </CardProvider>
-    );
-
-    //find the skip button
-    const skipButton = getByText(/skip/i);
-
-    //find the skip display
-    const skipDisplay = getByTestId('skipDisplay');
-    
-    //skip display should start at 0
-    expect(skipDisplay).toHaveTextContent('0');
-
-    //click the skip button
-    fireEvent.click(skipButton);
-
-    expect(skipDisplay).toHaveTextContent('1');
-})
-
 
 //and the snapshot
 it('Matches Snapshot', () => {
@@ -291,4 +253,3 @@ it('Matches Snapshot', () => {
     //expect the result of asFragment() to match the snapshot of this component
     expect(asFragment()).toMatchSnapshot(); 
 });
-  
