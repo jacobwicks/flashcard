@@ -27,6 +27,13 @@ it('shows the NavBar', () => {
   expect(navBar).toBeInTheDocument();
 });
 
+//shows the Selector
+it('shows the Selector', () => {
+  const { getByTestId } = render(<App/>);
+  const selector = getByTestId('sidebar');
+  expect(selector).toBeInTheDocument();
+});
+
 //snapshot
 it('Matches Snapshot', () => {
   const { asFragment } = render(<App/>);
