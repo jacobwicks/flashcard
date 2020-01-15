@@ -14,19 +14,14 @@ import {
 import { CardContext } from '../../services/CardContext';
 
 //The types of action that CardContext can handle
-import { CardActionTypes, StatsActionType } from '../../types';
-
-import { StatsContext } from '../../services/StatsContext';
+import { CardActionTypes } from '../../types';
 
 import Answer from './components/Answer';
 import Buttons from './components/Buttons';
-import Stats from './components/Stats';
 
 const Answering = () => {
     //get cards, current index, and dispatch from CardContext
     const { cards, current, dispatch } = useContext(CardContext);
-    //get dispatch from StatsContext
-    const { dispatch: statsDispatch } = useContext(StatsContext);
 
     //get the question from the current card
     const { question } = cards[current];
@@ -36,17 +31,14 @@ const Answering = () => {
     useEffect(() => {
         //hide the answer
         setShowAnswer(false);
-        
+
         //useEffect triggers when the value of current changes
     }, [current, setShowAnswer]);
-    
+
 return (
     <Container data-testid='container'>
-         <Header data-testid='question'><Stats/>{question}</Header>
-         <Button onClick={() => {
-            dispatch({type: CardActionTypes.next});
-            statsDispatch({type: StatsActionType.skip, question});   
-         }}>Skip</Button>
+         <Header data-testid='question' content={question}/>
+         <Button onClick={() => dispatch({type: CardActionTypes.next})}>Skip</Button>
          <Form>
             <TextArea data-testid='textarea'/>
         </Form>
