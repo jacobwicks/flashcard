@@ -1,6 +1,6 @@
 //React lets us create and display components to the user
 //We need to import it so that we can look at the components to test them
-import React, { useContext } from 'react';
+import React from 'react';
 
 //testing library gives us methods to test components
 //we use render to look at React components
@@ -17,7 +17,7 @@ import Answering from './index';
 
 import { CardState } from '../../types';
 
-import { CardProvider, initialState, CardContext } from '../../services/CardContext';
+import { CardProvider, initialState } from '../../services/CardContext';
 
 afterEach(cleanup);
 
@@ -114,7 +114,13 @@ describe('submit button controls display of the answer', () => {
     //remove lineBreaks from initialAnswer for comparison to textContent of elements 
     const withoutLineBreaks = initialAnswer.replace(/\s{2,}/g, " ");
 
-    const compareToInitialAnswer = (content: string) => content === withoutLineBreaks;
+    const compareToInitialAnswer = (
+        content: string, 
+        { textContent } : HTMLElement
+    ) => !!textContent && 
+        textContent
+        .replace(/\s{2,}/g, " ")
+        .slice(6, textContent.length) === withoutLineBreaks;
 
 it('the answer does not show up before the submit button is clicked', () => {
     const { queryByText } = renderAnswering();
@@ -138,47 +144,7 @@ it('clicks the submit button and shows the answer', () => {
     //assertion
     expect(answer).toBeInTheDocument();
   });
-
-  //answer goes away
-  it('answer disappears when card changes', () => {
-    const { getByText, queryByText } = renderAnswering();
-    
-    //find the submit button
-    const submit = getByText(/submit/i);
-    //simulating a click on the submit button
-    fireEvent.click(submit);
-  
-    //use a custom function to find the answer
-    const answer = getByText(compareToInitialAnswer);
-    
-    //assertion
-    expect(answer).toBeInTheDocument();
-
-    //clicking skip changes the current index 
-    const skip = getByText(/skip/i);
-    fireEvent.click(skip);
-
-    //the answer to the second question
-    const secondAnswer = initialState.cards[initialState.current + 1].answer;
-    
-    //remove lineBreaks from initialAnswer for comparison to textContent of elements 
-    const withoutLineBreaks = secondAnswer.replace(/\s{2,}/g, " ");
-
-    //a function that compares a string to the second answer
-    const compareToSecondAnswer = (content: string) => content === withoutLineBreaks;
-
-    //look for the first answer
-    const gone = queryByText(compareToInitialAnswer);
-    //first answer shouldn't show up
-    expect(gone).toBeNull();
-
-    //look for the second answer
-    const answer2 = queryByText(compareToSecondAnswer);
-    //second answer shouldn't show up
-    expect(answer2).toBeNull();
-  });
 })
-
 
 describe('clicking the Submit Button makes the Right and Wrong Buttons show up', () => {
     //the Right button does not show up before Submit is clicked

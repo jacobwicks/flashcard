@@ -17,7 +17,7 @@ import Answering from './index';
 
 import { CardState } from '../../types';
 
-import { CardProvider, initialState } from '../../services/CardContext';
+import { CardProvider, initialState, CardContext } from '../../services/CardContext';
 
 afterEach(cleanup);
 
@@ -114,7 +114,13 @@ describe('submit button controls display of the answer', () => {
     //remove lineBreaks from initialAnswer for comparison to textContent of elements 
     const withoutLineBreaks = initialAnswer.replace(/\s{2,}/g, " ");
 
-    const compareToInitialAnswer = (content: string) => content === withoutLineBreaks;
+    const compareToInitialAnswer = (
+        content: string, 
+        { textContent } : HTMLElement
+    ) => !!textContent && 
+        textContent
+        .replace(/\s{2,}/g, " ")
+        .slice(6, textContent.length) === withoutLineBreaks;
 
     it('the answer does not show up before the submit button is clicked', () => {
         const { queryByText } = renderAnswering();
@@ -142,7 +148,7 @@ describe('submit button controls display of the answer', () => {
 
     //answer goes away
     it('answer disappears when card changes', async () => {
-        const { getByText, queryByText } = renderAnswering();
+        const { debug, getByText, queryByText } = renderAnswering();
         
         //find the submit button
         const submit = getByText(/submit/i);
@@ -220,24 +226,6 @@ describe('clicking the Submit Button makes the Right and Wrong Buttons show up',
     });
 });
 
-it('clears the answer when card changes', () => {
-    const { getByText, getByTestId } = renderAnswering();
-    //get reference to textarea
-    const textarea = getByTestId('textarea');
-    
-    const placeholder = 'placeholder text'
-    //change content of textarea
-    fireEvent.change(textarea, { target: { value: placeholder } });
-    //make sure textarea textcontent matches placeholder before we clear it
-    expect(textarea).toHaveTextContent(placeholder);
-    
-    //clicking skip changes the card
-    const skip = getByText(/skip/i);
-    fireEvent.click(skip);
-
-    //textarea should be clear
-    expect(textarea).toHaveTextContent('');
-});
 
 //and the snapshot
 it('Matches Snapshot', () => {
