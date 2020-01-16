@@ -25,12 +25,7 @@ const Selector = () => {
         width='thin'
       >
         <Menu.Item as='a'>Subjects</Menu.Item>
-        {subjects.map(subject => 
-            <Menu.Item 
-                content={subject}
-                key={subject} 
-                onClick={() => dispatch({type: CardActionTypes.showAdd, subject})}
-            />)}
+        {subjects.map(subject => <Menu.Item key={subject} content={subject}/>)}
       </Sidebar>
     )    
 };
