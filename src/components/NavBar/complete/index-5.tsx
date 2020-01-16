@@ -1,8 +1,6 @@
 import React, { useContext } from 'react';
 import { Menu } from 'semantic-ui-react';
 import { SceneTypes } from '../../types';
-import { CardContext }  from '../../services/CardContext';
-import { CardActionTypes } from '../../types';
 
 const NavBar = ({
     setShowScene,
@@ -11,7 +9,6 @@ const NavBar = ({
     setShowScene: (scene: SceneTypes) => void,
     showScene: SceneTypes
 }) => {
-    const { current, dispatch } = useContext(CardContext);
     return(
         <Menu data-testid='menu'>
         <Menu.Item header content='Flashcard App'/>
