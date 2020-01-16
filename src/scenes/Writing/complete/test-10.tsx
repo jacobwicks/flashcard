@@ -127,7 +127,39 @@ describe('the new card button', () => {
         expect(newButton).toBeInTheDocument();
     });
     
-   //when you click the delete button the card matching the question in the question textarea is deleted from the array cards
+    //when you click the new button the writing component clears its inputs
+    it('when you click the new card button the writing component clears its inputs', () => {
+        const { getByText, getByTestId } = renderWriting();
+
+        const answer = getByTestId('answer');
+        expect(answer.textContent).toBeTruthy();
+
+        const question = getByTestId('question');
+        expect(question.textContent).toBeTruthy();
+
+        const subject = getByTestId('subject').children[0];
+        expect(subject).toHaveValue();
+
+        const newButton = getByText(/new/i);
+        fireEvent.click(newButton);
+
+        expect(answer.textContent).toBeFalsy();
+        expect(question.textContent).toBeFalsy();
+        expect(subject).not.toHaveValue();
+    })
+});
+
+describe('the delete card button', () => {
+    //there's a button to delete the current card
+    it('has a delete button', () => {
+        const { getByText } = renderWriting();
+        const deleteButton = getByText(/delete/i);
+        expect(deleteButton).toBeInTheDocument();
+    });
+
+    //when you click the delete button 
+    //the card matching the question in the question textarea 
+    //is deleted from the array cards
     it('clicking delete removes the selected question', () => {
         const lastIndex = initialState.cards.length - 1;
         const lastState = {
@@ -137,7 +169,7 @@ describe('the new card button', () => {
         const lastQuestion = initialState.cards[lastIndex].question;
 
         const { getByTestId, getByText } = renderWriting(lastState, <LastCard />);
-        
+
         const lastCard = getByTestId('lastCard');
         expect(lastCard).toHaveTextContent(lastQuestion);
 
@@ -147,5 +179,4 @@ describe('the new card button', () => {
 
         expect(lastCard).not.toHaveTextContent(lastQuestion);
     });
-
 });
