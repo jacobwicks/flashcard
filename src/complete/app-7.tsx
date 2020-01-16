@@ -6,6 +6,7 @@ import { CardProvider } from './services/CardContext';
 import { StatsProvider } from './services/StatsContext';
 import { SceneTypes } from './types';
 import NavBar from './components/NavBar';
+import Selector from './components/Selector';
 
 const App: React.FC = () => {
   
@@ -15,6 +16,7 @@ const App: React.FC = () => {
       <CardProvider>
         <StatsProvider>
           <NavBar showScene={showScene} setShowScene={setShowScene} />
+          <Selector/>
           {showScene === SceneTypes.answering && <Answering />}
           {showScene === SceneTypes.writing && <Writing/>}
         </StatsProvider>
