@@ -62,6 +62,9 @@ export interface CardState {
     //the dispatch function that accepts actions
     //actions are handled by the reducer in CardContext
     dispatch: (action: CardAction) => void
+    
+    //the array of subjects currently displayed
+    show: string[]
 };
 
 //The stats for a single question
