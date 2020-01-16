@@ -119,11 +119,38 @@ it('loads the current card', () => {
     expect(subject).toHaveValue(card.subject);
 });
 
-//there's a button to create a new card
-//when you click the new button the writing component clears its inputs
+describe('the new card button', () => {
+    //there's a button to create a new card
+    it('has a new button', () => {
+        const { getByText } = renderWriting();
+        const newButton = getByText(/new/i);
+        expect(newButton).toBeInTheDocument();
+    });
+    
+    //when you click the new button the writing component clears its inputs
+    it('when you click the new card button the writing component clears its inputs', () => {
+        const { getByText, getByTestId } = renderWriting();
+
+        const answer = getByTestId('answer');
+        expect(answer.textContent).toBeTruthy();
+
+        const question = getByTestId('question');
+        expect(question.textContent).toBeTruthy();
+
+        const subject = getByTestId('subject').children[0];
+        expect(subject).toHaveValue();
+
+        const newButton = getByText(/new/i);
+        fireEvent.click(newButton);
+
+        expect(answer.textContent).toBeFalsy();
+        expect(question.textContent).toBeFalsy();
+        expect(subject).not.toHaveValue();
+    })
+});
+
 
 
     //there's a button to delete the current card
 
     //when you click the delete button the card matching the question in the question textarea is deleted from the array cards
-

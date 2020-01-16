@@ -119,33 +119,11 @@ it('loads the current card', () => {
     expect(subject).toHaveValue(card.subject);
 });
 
-describe('the new card button', () => {
-    //there's a button to create a new card
-    it('has a new button', () => {
-        const { getByText } = renderWriting();
-        const newButton = getByText(/new/i);
-        expect(newButton).toBeInTheDocument();
-    });
-    
-   //when you click the delete button the card matching the question in the question textarea is deleted from the array cards
-    it('clicking delete removes the selected question', () => {
-        const lastIndex = initialState.cards.length - 1;
-        const lastState = {
-            ...initialState,
-            current: lastIndex
-        };
-        const lastQuestion = initialState.cards[lastIndex].question;
+//there's a button to create a new card
+//when you click the new button the writing component clears its inputs
 
-        const { getByTestId, getByText } = renderWriting(lastState, <LastCard />);
-        
-        const lastCard = getByTestId('lastCard');
-        expect(lastCard).toHaveTextContent(lastQuestion);
 
-        //call this deleteButton, delete is a reserved word
-        const deleteButton = getByText(/delete/i);
-        fireEvent.click(deleteButton);
+    //there's a button to delete the current card
 
-        expect(lastCard).not.toHaveTextContent(lastQuestion);
-    });
+    //when you click the delete button the card matching the question in the question textarea is deleted from the array cards
 
-});
