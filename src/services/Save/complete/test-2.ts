@@ -1,6 +1,6 @@
 import { cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import { saveCards } from './index';
+import { loadCards, saveCards } from './index';
 import { initialState } from '../CardContext';
 
 afterEach(cleanup);
