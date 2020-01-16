@@ -29,7 +29,7 @@ const Writing = () => {
 
     return (
         <Container style={{position: 'absolute', left: 200}}>
-            <Button content='New Card'/>
+            <Button content='New Card' onClick={() => dispatch({type: CardActionTypes.new})}/>
             <Form 
                 onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                     e.preventDefault();

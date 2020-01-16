@@ -27,6 +27,33 @@ const Writing = () => {
     const [answer, setAnswer ] = useState(card ? card.answer : '')
     const [subject, setSubject ] = useState(card ? card.subject : '');
 
+    //a function that sets all the states to empty strings    
+    const clearAll = useCallback(
+        () => {
+            setQuestion('');
+            setAnswer('');
+            setSubject('');
+    }, [
+        setQuestion,
+        setAnswer,
+        setSubject
+    ]);
+
+    //a useEffect hook to set the state to the current card
+    useEffect(() => {
+        if (!!card) {
+            const { question, answer, subject } = card;
+            setQuestion(question);
+            setAnswer(answer);
+            setSubject(subject);
+        } else {
+            clearAll();
+        };
+    }, [
+        card,
+        clearAll 
+    ]);
+
     return (
         <Container style={{position: 'absolute', left: 200}}>
             <Button content='New Card' onClick={() => dispatch({type: CardActionTypes.new})}/>
