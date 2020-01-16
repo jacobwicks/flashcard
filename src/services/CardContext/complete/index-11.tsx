@@ -119,12 +119,6 @@ export const reducer = (state: CardState, action: any) => {
                 show
             }
         }
-        case 'showAll': {
-            return {
-                ...state,
-                show: []
-            }
-        }
         //default case returns the previous state without changing it
         default: 
             return state
