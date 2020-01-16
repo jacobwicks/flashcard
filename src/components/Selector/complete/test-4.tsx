@@ -43,6 +43,7 @@ describe('the subjects menu item', () => {
             expect(selector).toBeInTheDocument();
         });
         
+        //clicking the 'subjects' menu item clears the selected subjects so the app will shows cards from all subjects    
         //clicking the 'subjects' menu item clears the selected subjects so the app will shows cards from all subjects
         it('clicking the subjects menu clears show', () => {
             const showSubjects = ['First Subject', 'Second Subject'];
@@ -100,7 +101,7 @@ describe('when there are cards, the sidebar has a menu item for each subject', (
         const cards : Card[] = [];
 
         for (let i = 1; i <= number; i++) {
-            cards.push(getCard(number));
+            cards.push(getCard(i));
         };
         
         //create state with cards with subjects
@@ -124,7 +125,7 @@ describe('when there are cards, the sidebar has a menu item for each subject', (
         const cards : Card[] = [];
 
         for (let i = 1; i <= number; i++) {
-            cards.push(getCard(number));
+            cards.push(getCard(i));
         };
         
         //create state with cards with subjects
