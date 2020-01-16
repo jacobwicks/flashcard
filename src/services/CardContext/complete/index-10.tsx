@@ -108,17 +108,6 @@ export const reducer = (state: CardState, action: any) => {
                 current
             }
         }
-        case 'showAdd': {
-            const { subject } = action;
-            const show = [...state.show];
-            
-            !show.includes(subject) && show.push(subject);
-
-            return {
-                ...state,
-                show
-            }
-        }
         //default case returns the previous state without changing it
         default: 
             return state
