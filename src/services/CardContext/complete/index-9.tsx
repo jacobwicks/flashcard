@@ -93,21 +93,6 @@ export const reducer = (state: CardState, action: any) => {
                 cards: newCards
             }
         }
-        case 'select' : {
-            const { cards } = state;
-            const { question } = action;
-    
-            if (!question) return state;            
-            
-            const current = cards.findIndex(card => card.question === question);
-    
-            if (current < 0 ) return state;
-            
-            return {
-                ...state,
-                current
-            }
-        }
         //default case returns the previous state without changing it
         default: 
             return state
