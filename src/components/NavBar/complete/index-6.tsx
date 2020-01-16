@@ -17,7 +17,10 @@ const NavBar = ({
         <Menu.Item header content='Flashcard App'/>
         <Menu.Item content='Answer Flashcards' 
             active={showScene === SceneTypes.answering}
-            onClick={() => setShowScene(SceneTypes.answering)}
+            onClick={() => {
+                current === -1 && dispatch({type: CardActionTypes.next});
+                setShowScene(SceneTypes.answering)
+            }}
         />
         <Menu.Item content='Edit Flashcards'
             active={showScene === SceneTypes.writing}
