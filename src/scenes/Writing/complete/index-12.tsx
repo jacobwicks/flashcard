@@ -57,7 +57,7 @@ const Writing = () => {
     return (
         <Container style={{position: 'absolute', left: 200}}>
             <Button content='New Card' onClick={() => dispatch({type: CardActionTypes.new})}/>
-            <Button content='Delete this Card'/>
+            <Button content='Delete this Card' onClick={() => dispatch({type: CardActionTypes.delete, question})}/>
             <Form 
                 onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                     e.preventDefault();
