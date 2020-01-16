@@ -28,35 +28,38 @@ const Writing = () => {
     const [subject, setSubject ] = useState(card ? card.subject : '');
 
     return (
-    <Form 
-        onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
-            e.preventDefault();
-            const card = new FormData(e.target as HTMLFormElement);
-            const answer = card.get('answer') as string;
-            const question = card.get('question') as string;
-            const subject = card.get('subject') as string;
+        <Container style={{position: 'absolute', left: 200}}>
+            <Button content='New Card'/>
+            <Form 
+                onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+                    e.preventDefault();
+                    const card = new FormData(e.target as HTMLFormElement);
+                    const answer = card.get('answer') as string;
+                    const question = card.get('question') as string;
+                    const subject = card.get('subject') as string;
 
-            dispatch({
-                type: CardActionTypes.save,
-                answer,
-                question,
-                subject
-            });
-        }}>
-        <Header as='h3'>Subject</Header> 
-        <Input data-testid='subject' name='subject'
-            onChange={(e, { value }) => setSubject(value)}
-            value={subject}/>
-        <Header as='h3' content='Question'/> 
-        <TextArea data-testid='question' name='question'
-             onChange={(e, { value }) => setQuestion(value!.toString())}
-             value={question}/>
-        <Header as='h3' content='Answer'/> 
-        <TextArea data-testid='answer' name='answer'
-            onChange={(e, { value }) => setAnswer(value!.toString())}
-            value={answer}/>
-        <Button content='Save'/>
-    </Form>
-)};
+                    dispatch({
+                        type: CardActionTypes.save,
+                        answer,
+                        question,
+                        subject
+                    });
+                }}>
+                <Header as='h3'>Subject</Header> 
+                <Input data-testid='subject' name='subject'
+                    onChange={(e, { value }) => setSubject(value)}
+                    value={subject}/>
+                <Header as='h3' content='Question'/> 
+                <TextArea data-testid='question' name='question'
+                    onChange={(e, { value }) => setQuestion(value!.toString())}
+                    value={question}/>
+                <Header as='h3' content='Answer'/> 
+                <TextArea data-testid='answer' name='answer'
+                    onChange={(e, { value }) => setAnswer(value!.toString())}
+                    value={answer}/>
+                <Button content='Save'/>
+            </Form>
+        </Container>
+    )};
 
 export default Writing;

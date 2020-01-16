@@ -17,7 +17,15 @@ import { CardContext } from '../../services/CardContext';
 import { CardActionTypes } from '../../types';
 
 const Writing = () => {
-    const { dispatch } = useContext(CardContext);
+    const { cards, current, dispatch } = useContext(CardContext);
+   
+    //a reference to the current card object
+    const card = cards[current];
+
+    //useState hooks to store the value of the three input fields
+    const [question, setQuestion ] = useState(card ? card.question : '')
+    const [answer, setAnswer ] = useState(card ? card.answer : '')
+    const [subject, setSubject ] = useState(card ? card.subject : '');
 
     return (
     <Form 
@@ -36,11 +44,17 @@ const Writing = () => {
             });
         }}>
         <Header as='h3'>Subject</Header> 
-        <Input data-testid='subject' name='subject'/>
+        <Input data-testid='subject' name='subject'
+            onChange={(e, { value }) => setSubject(value)}
+            value={subject}/>
         <Header as='h3' content='Question'/> 
-        <TextArea data-testid='question' name='question'/>
+        <TextArea data-testid='question' name='question'
+             onChange={(e, { value }) => setQuestion(value!.toString())}
+             value={question}/>
         <Header as='h3' content='Answer'/> 
-        <TextArea data-testid='answer' name='answer'/>
+        <TextArea data-testid='answer' name='answer'
+            onChange={(e, { value }) => setAnswer(value!.toString())}
+            value={answer}/>
         <Button content='Save'/>
     </Form>
 )};
