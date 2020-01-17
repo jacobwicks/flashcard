@@ -22,7 +22,7 @@ const Answering = () => {
     const { question } = cards[current];
 
 return (
-    <Container data-testid='container'>
+    <Container data-testid='container' style={{position: 'absolute', left: 200}}>
          <Header data-testid='question' content={question}/>
          <Button>Skip</Button>
          <Form>

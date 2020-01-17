@@ -36,7 +36,7 @@ const Answering = () => {
     }, [current, setShowAnswer]);
 
 return (
-    <Container data-testid='container'>
+    <Container data-testid='container' style={{position: 'absolute', left: 200}}>
          <Header data-testid='question' content={question}/>
          <Button onClick={() => dispatch({type: CardActionTypes.next})}>Skip</Button>
          <Form>
