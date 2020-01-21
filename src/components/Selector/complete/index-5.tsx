@@ -7,7 +7,7 @@ import { CardContext } from '../../services/CardContext';
 import { CardActionTypes } from '../../types';
 
 const Selector = () => {
-    const { cards, dispatch } = useContext(CardContext);
+    const { cards, dispatch, show } = useContext(CardContext);
     
     const subjectArray = cards.map(card => card.subject);
     
@@ -24,7 +24,9 @@ const Selector = () => {
         visible
         width='thin'
       >
-        <Menu.Item as='a' onClick={() => dispatch({type: CardActionTypes.showAll})}>Subjects</Menu.Item>
+        <Menu.Item as='a' onClick={() => dispatch({type: CardActionTypes.showAll})}>
+            Subjects{!!show.length && `: ${show.length}`}
+        </Menu.Item>
         {subjects.map(subject => 
             <Menu.Item 
                 content={subject}
